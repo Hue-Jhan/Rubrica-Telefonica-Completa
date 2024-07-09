@@ -11,4 +11,18 @@ Il progetto è una semplice interfaccia per una classica rubrica telefonica, si 
 I casi di test coinvolgono solo le funzioni accessibili dall'utente, ovvero quelle presenti nella Funzione Principale. Le consegne sono le consegne intermedie effettuate di tanto in tanto prima di consegnare il progetto completo.
 
 # 💻 Codice e funzionamento
-Il codice parte da
+<img align="right" src="rubrica.png" width="350" />
+Il codice parte da un interfaccia semplice (in foto) dalla quale si possono eseguire le operazioni principali, la rubrica è gestita come una lista a puntatori, ogni contatto è un nodo costituito da nome, cognome, numero di telefono, stato (normale/preferito/bloccato) e il puntatore.  <br />  <br />
+
+Ecco l'elenco delle operazioni:
+- Inserire Nuovo Contatto;
+- Modificare Contatto;
+- Cancellare Contatto;
+- Ordinare rubrica;
+- Visualizzare rubrica;
+- Aggiungere/Rimuovere preferiti;
+- Aggiungere/Rimuovere bloccati;
+- Esportare rubrica su file
+- Importare rubrica da file
+
+La funzione **`Cercare Contatto`** è molto particolare: per cercare un contatto prima bisogna digitarne il nome, subito dopo tutti i contatti in rubrica con lo stesso nome verranno copiati, aggiunti a una rubrica temporanea e mostrati all'utente; in seguito l'utente digita il cognome del contatto che vuole cercare e viene selezionato il primo contatto con quel cognome nella rubrica temporanea (in teoria dovrebbe essere il primo e anche l'unico); infine la rubrica temporanea viene svuotata (memoria non deallocata).
