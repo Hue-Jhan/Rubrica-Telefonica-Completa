@@ -1,0 +1,175 @@
+
+- CONSEGNA 5 - GESTIRE CONTATTO - GRUPPO 31
+
+_______________________________________________________________________________
+- AGGIUNGERE CONTATTO AI PREFERITI O BLOCCATI:
+Input: rubrica, rubrica in cui si trova il contatto da aggiungere ai preferiti, rubrica
+Output: rubrica, rubrica con contatto scelto aggiunto ai preferiti o bloccati, rubrica
+Lavoro: scelta, indica se aggiungere ai preferiti (2) o bloccati (3), intero
+	contatto_c, contatto da scegliere e aggiungere ai preferiti o bloccati, contatto
+	x, valore che indica se uscire dal ciclo, intero
+	fine, valore utile a chiudere il ciclo, è pari a 1 se il ciclo va chiuso, intero
+	numero_t, numero del contatto da aggiungerea i preferiti o bloccati,, intero
+Codice:
+x=-10
+fine=0
+scelta=0
+contatto_c = NULL
+PulireSchermo(2, 1, 30, 90)
+GOTOXY(2, 15)
+StampareAVideo("Aggiungere contatto ai preferiti o bloccati")
+Mentre (x = -10)
+	GOTOXY(3, 1)
+	StampareAVideo("Scegliere contatto da aggiungere ai preferiti o bloccati")
+	GOTOXY(4, 1)
+	numero_t = CercareContatto(r)
+	Se (verificaNumero(numero_t, r) = 0 OR numero_t = 0)
+		GOTOXY(5,1)
+		Allora MostrareErrore("31_errori", 6)
+		PulireSchermo(4, 1, 4, 100)
+	Fine
+	Altrimenti x=10
+	Fine
+Fine=1
+temp = campo Contatti di rubrica
+Mentre (temp != NULL)
+	Se (campo numero di temp = numero_t)
+		contatto_c = temp
+	temp = campo next di temp
+Fine
+Se (contatto_c = NULL)
+	GOTOXY(5,10)
+	MostrareErrore("31_errori.txt", 6)
+	PulireSchermo(5,1,5,90)
+GOTOXY(7, 10)
+Se (campo stato di contatto_c = 2) 
+	Allora StampareAVideo("Questo contatto è già nei preferiti)
+Fine
+Altrimenti Se (campo stato di contatto_c = 3) 
+	Allora StampareAVideo("Questo contatto è già nei bloccati)
+Fine
+GOTOXY(8, 8)
+StampareAVideo("Scegliere se aggiungere il contatto ai preferiti (2) o ai bloccati (3), premi (0) per uscire")
+Ripeti
+	PulireSchermo(9, 1, 9, 100)
+	GOTOXY(9, 1)
+	StampareAVideo("Inserire Opzione: ")
+	GOTOXY(9, 19)
+	scelta = LeggereDaTastiera(scelta)
+	Se (scelta = 2)
+		Allora contatto_c = ScrivereStato(2, contatto_c, r)
+		       fine = 1
+	Fine
+	Altrimenti Se (scelta = 3)
+		Allora contatto_c = ScrivereStato(3, contatto_c, r)
+		       fine = 1
+	Fine
+	Altrimenti Se (scelta = 0)
+		Allora fine = 1
+	Fine
+	Altrimenti
+		GOTOXY(10, 1)
+		MostrareErrore("31_errori", 7)
+	Fine
+Finché (fine = 0)
+StampareAVideo("Contatto aggiunto correttamente")
+PulireSchermo(2, 1, 100, 100)
+_______________________________________________________________________________
+- RIMUOVERE CONTATTO DAI PREFERITI
+Input: rub, rubrica di cui visualizzare i preferiti, selezionare un contatto e rimuoverlo dai preferiti, rubrica
+Output: rub, rubrica con contatto selezionato non più tra i preferiti, rubrica
+Lavoro:	contatto_c, contatto da rimuovere dai preferiti, contatto
+	numero_t, numero del contatto da rimuovere dai preferiti, intero
+	temp, indice di scorrimento, contatto
+	f, valore che indica se il contatto scelto è gia nei preferiti, intero
+	x, valore che indica se uscire dal ciclo, intero
+Codice:
+x = -10
+f = 0
+contatto_c = NULL
+PulireSchermo(2, 1, 30 90)
+GOTOXY(2, 15)
+StampareAVideo("Rimuovere contatto dai preferiti")
+Mentre (x = -10)
+	GOTOXY(3, 1)
+	StampareAVideo("Scegliere il contatto da rimuovere dai preferiti")
+	GOTOXY(5,1)
+	numero_t = CercareContatto(rub)
+	Se (verificaNumero(numero_t, r) = 0 OR numero_t = 0)
+		GOTOXY(5,1)
+		Allora MostrareErrore("31_errori", 6)
+		PulireSchermo(4, 1, 4, 100)
+	Altrimenti x=10
+	Fine
+Fine
+temp = campo Contatti di rubrica
+Mentre (temp != NULL)
+	Se (campo numero di temp = numero_t)
+		contatto_c = temp
+	temp = campo next di temp
+Fine
+Se (contatto_c = NULL)
+	GOTOXY(5,10)
+	MostrareErrore("31_errori.txt", 6)
+	PulireSchermo(5,1,5,90)
+temp = campo Contatti di rubrica
+Mentre (temp != NULL AND f != 0)
+	Se (LeggereNumero(temp, rubrica) = numero_t
+		Se (LeggereStato(temp, rubrica) = 2)
+			f = 1
+	temp = campo next di temp
+Fine
+Se (f != 0)
+	GOTOXY(6, 1);
+        MostrareErrore("31_errori.txt", 8);
+	PulireSchermo(3,0,7,90)
+contatto_c = ScrivereStato(1, contatto_c, rub)
+PulireSchermo(2, 1, 40, 100)
+_______________________________________________________________________________
+- RIMUOVERE CONTATTO DAI BLOCCATI
+Input: rub, rubrica di cui visualizzare i bloccati, selezionare un contatto e rimuoverlo dai bloccati, rubrica
+Output: rub, rubrica con contatto selezionato non più tra i bloccati, rubrica
+Lavoro: contatto_c, contatto da rimuovere dai bloccati, contatto
+	x, valore ausiliario che indica la posizione del contatto da rimuovere dai bloccati, intero
+Codice:
+x = -10
+f = 0
+contatto_c = NULL
+PulireSchermo(2, 1, 30 90)
+GOTOXY(2, 15)
+StampareAVideo("Rimuovere contatto dai preferiti")
+Mentre (x = -10)
+	GOTOXY(3, 1)
+	StampareAVideo("Scegliere il contatto da rimuovere dai bloccati")
+	GOTOXY(5,1)
+	numero_t = CercareContatto(rub)
+	Se (verificaNumero(numero_t, r) = 0 OR numero_t = 0)
+		GOTOXY(5,1)
+		Allora MostrareErrore("31_errori", 6)
+		PulireSchermo(4, 1, 4, 100)
+	Altrimenti x=10
+	Fine
+Fine
+temp = campo Contatti di rubrica
+Mentre (temp != NULL)
+	Se (campo numero di temp = numero_t)
+		contatto_c = temp
+	temp = campo next di temp
+Fine
+Se (contatto_c = NULL)
+	GOTOXY(5,10)
+	MostrareErrore("31_errori.txt", 6)
+	PulireSchermo(5,1,5,90)
+temp = campo Contatti di rubrica
+Mentre (temp != NULL AND f != 0)
+	Se (LeggereNumero(temp, rubrica) = numero_t
+		Se (LeggereStato(temp, rubrica) = 3)
+			f = 1
+	temp = campo next di temp
+Fine
+Se (f != 0)
+	GOTOXY(6, 1);
+        MostrareErrore("31_errori.txt", 9);
+	PulireSchermo(3,0,7,90)
+contatto_c = ScrivereStato(1, contatto_c, rub)
+PulireSchermo(2, 1, 40, 100)

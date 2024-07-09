@@ -1,0 +1,66 @@
+
+- CONSEGNA 5 - GESTIRE RUBRICA - GRUPPO 31
+
+_______________________________________________________________________________
+- VISUALIZZARE RUBRICA
+Input: rubrica, rubrica di cui visualizzare tutti i contatti, i preferiti o i bloccati, rubrica
+Output:
+Lavoro: scelta, scelta tra le opzioni, intero
+	esci, valore che indica se chiudere il programma, intero
+	fine, valore utile a chiudere il ciclo, è pari a 1 se il ciclo va chiuso, intero 
+Codice:
+scelta=0
+esci=0
+PulireSchermo(2, 1, 100 100)
+GOTOXY(2, 15)
+StampareAVideo("Visualizzare rubrica, preferiti o bloccati")
+GOTOXY(3, 8)
+StampareAVideo("Scegliere se visualizzare tutta la rubrica (1), i preferiti (2) o i bloccati (3), premi (0) per uscire")
+Ripeti
+	PulireSchermo(5, 1, 5, 100)
+	GOTOXY(5, 1)
+	StampareAVideo("Inserire Opzione: ")
+	GOTOXY(5, 19)
+	scelta = LeggereDaTastiera(scelta)
+	Se scelta = 1
+		Allora ElencareContattiRubrica(rubrica, 1, 2, 3)
+		       fine = 1
+	Altrimenti Se scelta = 2
+		Allora ElencareContattiRubrica(rubrica, 2, 2, 2)
+		       fine = 1
+	Altrimenti Se scelta = 3
+		Allora ElencareContattiRubrica(rubrica, 3, 3, 3)
+		       fine = 1
+	Altrimenti Se scelta = 0
+		Allora fine = 1
+	Altrimenti
+		GOTOXY(7, 1)
+		MostrareErrore("31_errori", 7)
+Finche (fine = 1)
+PulireSchermo(2, 1, 100, 100)
+_______________________________________________________________________________
+- ELENCARE CONTATTI RUBRICA
+Input: rubrica, rubrica di cui elencare i contatti, rubrica
+       stato1, primo stato dei contatti da mostare, intero, compreso tra 1 e 3
+       stato2, secondo stato dei contatti da mostare, intero, compreso tra 1 e 3
+       stato3, terzo stato dei contatti da mostare, intero, compreso tra 1 e 3
+Output:
+Lavoro: z, valore ausiliario, intero
+	nodoc, indice di scorrimento, contatto
+Codice:
+nodoc = campo Contatti di rubrica
+GOTOXY(7,1)
+z=7
+Mentre (nodoc != NULL)
+	Se (LeggereStato(nodoc, rubrica) = stato1 OR LeggereStato(nodoc, rubrica) = stato2 OR LeggereStato(nodoc, rubrica) = stato3)
+		Allora GOTOXY(z,4)
+		StampareAVideo(LeggereNome(nodoc, rubrica))
+		GOTOXY(z, MAXLUNGNOME + 4)
+		StampareAVideo(LeggereCognome(nodoc, rubrica))
+		GOTOXY(z, MAXLUNGCOGNOME + MAXLUNGNOME + 4)
+		StampareAVideo(LeggiNumero(nodoc, rubrica))
+		StampareAVideo("\n")
+		z = z + 1
+	Fine
+	nodoc = campo next di nodoc
+Fine
