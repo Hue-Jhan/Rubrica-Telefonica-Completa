@@ -1,0 +1,67 @@
+
+- FUNZIONE PRINCIPALE - GRUPPO 31
+
+_________________________________________________________________________________
+- FUNZIONE PRINCIPALE
+Lavoro: scelta, scelta tra le opzioni, intero
+	esci, valore che indica se chiudere il programma, intero
+	rubrica, rubrica in cui effettuare le operazioni, rubrica
+Codice:
+scelta = 0
+esci = 0
+Mentre (esci = 0)
+	GOTOXY(1, 40)
+	StampareAVideo("RUBRICA")
+	GOTOXY(5, 13)
+	StampareAVideo("0) Inserire nuovo contatto")
+	GOTOXY(6, 13)
+	StampareAVideo("1) Modificare contatto esistente")
+	GOTOXY(7, 13)
+	StampareAVideo("2) Cancellare contatto esistente")
+	GOTOXY(8, 13)
+	StampareAVideo("3) Ordinare la rubrica")
+	GOTOXY(9, 13)
+	StampareAVideo("4) Visualizzare la rubrica")
+	GOTOXY(10,13) 
+	StampareAVideo("5) Aggiungere contatto ai preferiti o bloccati")
+	GOTOXY(11,13)
+	StampareAVideo("6) Rimuovere contatto dai preferiti")
+	GOTOXY(12,13) 
+	StampareAVideo("7) Rimuovere contatto dai bloccati")
+	GOTOXY(13,13)
+	StampareAVideo("8) Esportare rubrica su file")
+	GOTOXY(14,13) 
+	StampareAVideo("9) Importare rubrica su file")
+	GOTOXY(15,13)
+	StampareAVideo("e) Uscire")
+	GOTOXY(19,20)
+	StampareAVideo("Inserire opzione: ")
+	scelta = LeggereDaTastiera(scelta)
+	Se (scelta = 0)
+		Allora InserisciNuovoContatto(rubrica)
+	Altrimenti Se (scelta = 1)
+		Allora ModificareContatto(rubrica)
+	Altrimenti Se (scelta = 2)
+		Allora CancellareContatto(rubrica)
+	Altrimenti Se (scelta = 3)
+		Allora OrdinareRubrica(rubrica)
+	Altrimenti Se (scelta = 4)
+		Allora VisualizzareRubrica(rubrica)
+	Altrimenti Se (scelta = 5)
+		Allora AggiungereContattoAIPreferitiOBloccati(rubrica)
+	Altrimenti Se (scelta = 6)
+		Allora RimuovereContattoDaiPreferiti(rubrica)
+	Altrimenti Se (scelta = 7)
+		Allora RimuovereContattoDaiBloccati(rubrica)
+	Altrimenti Se (scelta = 8)
+		Allora EsportareContattiSuFile(rubrica)
+	Altrimenti Se (scelta = 9)
+		Allora ImportareContattiSuFile(rubrica)
+	Altrimenti Se (scelta = e)
+		Allora esci = 1
+	Altrimenti 
+		GOTOXY(19, 1)
+		MostrareErrore(7)
+		PulireSchermo(19,0,19,50)
+Fine
+PulireSchermo(2, 1, 50, 90)

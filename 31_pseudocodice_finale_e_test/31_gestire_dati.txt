@@ -1,0 +1,230 @@
+
+- GESTIRE DATI - GRUPPO 31
+
+Il modulo seguente contiene tutte le strutture dati presenti nel progetto, costanti,
+variabili globali, le funzioni d'accesso principali e alcune sottofunzioni importanti.
+
+
+- TIPI DI DATO: 
+CONTATTO, record con 4 campi
+	nome, nome del contatto, array di caratteri, >0, <MAXLUNGNOME
+	cognome, cognome del contatto, array di caratteri, >0, <MAXLUNGCOGNOME
+	numero, numero del contatto, intero, >999999999, <999999999999 
+	stato, indica se il contatto è normale (1), preferito (2), o bloccato (3), intero, >0, <4
+	next, contatto successivo, contatto
+
+RUBRICA, record con 2 campi
+	contatti, contatti della rubrica, Contatto
+	dimensione, dimensione della rubrica, intero, >0
+
+FILE, record con 2 campi
+	posizione, posizione del file in cui è stata eseguita l'ultima operazione, intero
+	lettere, caratteri contenuti nel file, array di caratteri
+
+STRINGA, record con 2 campi
+	lettere, caratteri contenuti nella stringa, array di caratteri
+	dim, dimensione della stringa, intero
+	pos, posizione di un carattere nella stringa, intero
+
+- COSTANTI:
+MAXLUNGNOME, massimo numero di caratteri di cui è composto il mome di un contatto, 20
+MAXLUNGCOGNOME, massimo numero di caratteri di cui è composto il cognome di un contatto, 30
+MAXLUNGSTRINGA, massimo numero di caratteri di cui è composta una stringa, 80
+MAX_LUNG_ARRAY_TELEFONO, massimo numero di caratteri di cui è composto l'array che contiene il numero di telefono (convertito da intero), 12
+
+// COMMENTO: MODIFICHE: cambiato il tipo di dato di contatto in un Nodo
+_______________________________________________________________________________	
+- FUNZIONi D'ACCESSO:
+
+- SCRIVERE NOME
+// COMMENTO: modifiche: aggiunto metodo di iterazione per i nodi
+Input: nome_c, nome del contatto, array di caratteri, >0, <MAXLUNGNOME
+       contatto, contatto del quale modificare il nome, contatto
+       rubrica, rubrica in cui si trova il contatto di cui scrivere il nome, rubrica
+Output: contatto, contatto con nome modificato, contatto
+Lavoro: temp, contatto ausiliario per scorrimento, contatto
+	i, indice di scorrimento, intero
+Codice:
+i=1
+temp = campo contatti di rubrica
+Mentre (temp != NULL AND campo numero di temp != campo numero di contatto)
+	temp = campo next di temp
+Fine
+Se (temp != NULL)
+	Mentre (i<MAXLUNGNOME) 
+	elemento in posizione i di campo nome di temp = elemento di nome_c in posizione i
+	i=i+1
+Fine
+	
+
+- LEGGERE NOME
+// COMMENTO: modifiche: aggiumto metodo di iterazione per i nodi
+Input: contatto, contatto di cui leggere il nome, contatto
+       rubrica, rubrica in cui si trova il contatto di cui leggere il nome, rubrica
+Output: nome_c, nome del contatto letto, array di caratteri, >0, <MAXLUNGNOME
+Lavoro: temp, contatto ausiliario per scorrimento, contatto
+	i, indice di scorrimento, intero
+Codice: 
+i=1
+temp = campo contatti di rubrica
+Mentre (temp != NULL AND campo numero di temp != campo numero di contatto)
+	temp = campo next di temp
+Fine
+Se (temp != NULL)
+	Mentre (i<MAXLUNGNOME) 
+	elemento di nome_c in posizione i = elemento in posizione i di campo nome di temp
+	i=i+1
+Fine
+_______________________________________________________________________________
+- LEGGERE COGNOME:
+// COMMENTO: modifiche: aggiumto metodo di iterazione per i nodi
+INPUT: contatto, contatto della rubrica, contatto
+       rubrica, rubrica in cui si trova il contatto di cui leggere il cognome, rubrica
+OUTPUT: cognome_c, cognome del contatto, array di caratteri, >0, <MAXLUNGCOGNOME
+Lavoro: temp, contatto ausiliario per scorrimento, contatto
+	i, indice di scorrimento, intero
+Codice: 
+i=1
+temp = campo contatti di rubrica
+Mentre (temp != NULL AND campo numero di temp != campo numero di contatto)
+	temp = campo next di temp
+Fine
+Se (temp != NULL)
+	Mentre (i<MAXLUNGCOGNOME) 
+	elemento di cognome_c in posizione i = elemento in posizione i di campo cognome di temp
+	i=i+1
+Fine
+
+- SCRIVERE COGNOME: 
+// COMMENTO: modifiche: aggiumto metodo di iterazione per i nodi
+INPUT: contatto, contatto della rubrica, contatto
+       cognome_c, cognome del contatto, array di caratteri, >0, <MAXLUNGCOGNOME
+       rubrica, rubrica in cui si trova il contatto di cui scrivere il nome, rubrica
+OUTPUT: contatto, contatto col cognome modificato, contatto
+Lavoro: temp, contatto ausiliario per scorrimento, contatto
+	i, indice di scorrimento, intero
+Codice:
+i=1
+temp = campo contatti di rubrica
+Mentre (temp != NULL AND campo numero di temp != campo numero di contatto)
+	temp = campo next di temp
+Fine
+Se (temp != NULL)
+	Mentre (i<MAXLUNCOGNOME) 
+	elemento in posizione i di campo cognome di temp = elemento di cognome_c in posizione i
+	i=i+1
+Fine
+_______________________________________________________________________________
+- LEGGERE STATO
+// COMMENTO: modifiche: aggiumto metodo di iterazione per i nodi
+Input: contatto, contatto di cui leggere lo stato, contatto
+       rubrica, rubrica in cui si trova il contatto di leggere lo stato, rubrica
+Output: stato, stato del contatto, intero, >0, <4
+Lavoro: temp, contatto ausiliario per scorrimento, contatto
+Codice:
+temp = campo contatti di rubrica
+Mentre (temp != NULL AND campo numero di temp != campo numero di contatto)
+	temp = campo next di temp
+Fine
+Se (temp != NULL)
+	stato = campo stato di temp
+Fine
+
+- SCRIVERE STATO
+// COMMENTO: modifiche: aggiumto metodo di iterazione per i nodi
+Input: nuovo_stato, stato da modificare in un contatto, intero, >0, <4
+       contatto, contatto del quale modificare lo stato, contatto
+       rubrica, rubrica in cui si trova il contatto di cui scrivere lo stato, rubrica
+Output: contatto, contatto con lo stato modificato, contatto
+Lavoro: temp, contatto ausiliario per scorrimento, contatto
+Codice:
+temp = campo contatti di rubrica
+Mentre (temp != NULL AND campo numero di temp != campo numero di contatto)
+	temp = campo next di temp
+Fine
+Se (temp != NULL)
+	campo stato di temp = nuovo_stato
+Fine
+_______________________________________________________________________________
+- SCRIVERE NUMERO:
+// COMMENTO: modifiche: aggiumto metodo di iterazione per i nodi
+Input: nuovo_numero, numero del contatto, intero, >999999999, <999999999999
+       rubrica, rubrica in cui si trova il contatto di cui scrivere il numero, rubrica
+       contatto, contatto di cui scrivere il numero, contatto
+Output: contatto, contatto col numero modificato, contatto
+Lavoro: temp, contatto ausiliario per scorrimento, contatto
+Codice:
+temp = campo contatti di rubrica
+Mentre (temp != NULL AND campo numero di temp != campo numero di contatto)
+	temp = campo next di temp
+Fine
+Se (temp != NULL)
+	campo numero di temp = nuovo_numero
+Fine
+
+- LEGGERE NUMERO:
+// COMMENTO: modifiche: aggiumto metodo di iterazione per i nodi
+Input: contatto, contatto di cui leggere il numero, contatto
+       rubrica, rubrica in cui si trova il contatto di cui leggere il numero, rubrica
+Output: numero, numero del contatto, intero, >999999999, <999999999999
+Lavoro: temp, contatto ausiliario per scorrimento, contatto
+Codice:
+temp = campo contatti di rubrica
+Mentre (temp != NULL AND campo numero di temp != campo numero di contatto)
+	temp = campo next di temp
+Fine
+Se (temp != NULL)
+	numero = campo numero di temp
+Fine
+_______________________________________________________________________________
+- LEGGERE DIMENSIONE:
+Input: rubrica, rubrica di cui leggere la dimensione, rubrica
+Output: dim, dimensione della rubrica, inter0, >0, <100
+Codice: dim = campo dimensione di rubrica
+
+- SCRIVERE DIMENSIONE:
+Input: dim, dimensione da applicare alla rubrica, intero
+       rubrica, rubrica di cui modificare la dimensione, rubrica
+Output: rubrica, rubrica con dimensione aggiornata, rubrica
+Codice: dim = campo dimensione di rubrica
+_______________________________________________________________________________
+- LUNGHEZZA STRINGA:
+Input: stringa, stringa di cui calcolare la lunghezza, array di caratteri
+Output: ln, lunghezza della stringa, intero
+Lavoro: i, indice di scorrimento, intero
+	x, indice di scrorrimento, intero
+Codice: 
+ln=1
+i=1
+x=0
+Mentre (x != '\0')
+	Se elemento di stringa in posizione i != '\0'
+		ln = ln + 1
+	i = i + 1
+Fine
+_______________________________________________________________________________
+- LEGGERE DA TASTIERA AVANZATO
+// COMMENTO: Spiegazione: questa funzione sostituisce un ciclo della funzione LeggerDaTastiera,
+// quindi data un dato e una dimensione massima permette all'utente di scrivere una quantità
+// di caratteri pari alla dimensione massima ridotta di uno, puo finire il ciclo premendo "."
+
+Input: dato, dato in cui salvare ciò che viene letto da tastiera, array di caratteri
+       dim, dimensione del dato, intero, >0
+Output: dato, dato modificato con caratteri digitati da tastiera, array di caratteri
+Lavoro: i, indice di scorrimento, intero
+	c, carattere letto da tastiera, carattere
+	fine, valore utile a chiudere il ciclo, è pari a 1 se il ciclo va chiuso, intero
+Codice:
+i=1
+fine=0
+Mentre (i>dim+1 AND fine=0)
+	c = LeggiDaTastiera(c)
+	Se (i = dim)
+		StampareAVideo("\n")
+		MostrareErrore(1)
+		fine = 1
+	Se (c = '.' AND i>1)
+		fine = 1
+	elemento di dato in posizione i = c
+	i = i + 1
+FINE

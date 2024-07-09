@@ -1,0 +1,296 @@
+
+- GESTIRE FILE - GRUPPO 31
+
+Il modulo seguente presenta funzioni relative alla gestione dei file e le relative sottofunzioni,
+e le funzioni d'interfaccia 
+_________________________________________________________________________________
+- FUNZIONI D'ACCESSO AI FILE
+
+- LEGGERE CARATTERE DA FILE
+INPUT: f,  file da cui leggere un carattere, File
+OUTPUT: c, carattere letto, carattere
+CODICE: c = campo lettere di f in posizione LeggerePosizioneFile(f)
+
+- SCRIVERE CARATTERE SU FILE
+INPUT: f,  file in cui scrivere un carattere, File
+       c, carattere da scrivere nel file, c
+OUTPUT: f, file modificato, file
+CODICE: campo caratteri di f in posizione LeggerePosizione(f)=c
+_________________________________________________________________________________
+- LEGGERE POSIZIONE FILE
+INPUT: f,  file da cui leggere l’ultima posizione usata, File
+OUTPUT: p, ultima posizione del file usata, naturale
+ALGORITMO: p = campo posizione di f
+
+- AVANZARE POSIZIONE FILE
+INPUT: f,  file di cui avanzare la posizione, File
+OUTPUT: f, file con la posizione modificata, File
+ALGORITMO: campo posizione di f = campo posizione di f + 1
+
+- CAMBIARE POSIZIONE FILE
+INPUT: f,  file di cui modificare la posizione, File
+       p, posizione da inserire, intero
+OUTPUT: f, file con la posizione modificata, File
+ALGORITMO: campo posizione di f = campo posizione di f + p
+_________________________________________________________________________________
+- FUNZIONI D'ACCESSO ALLLE STRINGHE
+
+- LEGGERE CARATTERE STRINGA
+INPUT: stringa, stringa in cui leggere un carattere, stringa
+p, posizione del carattere da leggere, naturale, < dimensione v1
+OUTPUT: l, carattere letto, carattere
+ALGORITMO: l = valore del campo lettere di stringa in posizione p
+
+- SCRIVERE CARATTERE STRINGA
+INPUT: stringa, stringa in cui scrivere un carattere, stringa
+p, posizione in cui scrivere il carattere, naturale, < dimensione v1
+l, carattere da scrivere, carattere
+OUTPUT: stringa, stringa aggiornata, stringa
+ALGORITMO: valore del campo lettere di stringa in posizione p = l
+_________________________________________________________________________________
+- MOSTRARE ERRORE
+// COMMENTO: Modifiche: rimosso il nome del file errori dall'input.
+Input: er, indica l'errore da mostrare, intero, >0, <8
+Output: errore, stringa che corrisponde all'errore, stringa
+Lavoro: i, indice di scorrimento, intero
+	cont, valore che indica che nel file è iniziato un nuovo rigo, intero
+Codice:
+i = 1
+cont = 1
+file = AprireFile("31_errori.txt", r)
+Mentre (LeggereCarattereDaFile(file) != EoF)
+	Se (cont < er)
+		Allora Se (LeggereCarattereDaFile(file) = '\n')
+			cont = cont + 1
+	Altrimenti Se (cont = er)
+		Mentre (LeggereCarattereDaFile(file) != '\n')
+			errore = ScrivereCarattereStringa(errore, i, LeggereCarattereDaFile(file))
+			i = i + 1
+			file = AvanzarePosizione(file)
+		Fine
+	file = AvanzarePosizione(file)
+Fine
+file = ChiudereFile("31_errori.txt")
+i=1
+Mentre (i<MAXLUNGSTRINGA) 
+	StampareAVideo(campo lettere di errore in posizione i)
+	i = i + 1
+Fine
+_________________________________________________________________________________
+- PULIRE SCHERMO 
+Input: x1, riga di inizio, intero 
+       y1, colonna di inizio, intero
+       x2, riga di fine, intero
+       y2, colonna di fine, intero 
+Output: null
+Lavoro: i, indice di scorrimento, intero
+	j, indice di scorrimento, intero
+Codice:
+i=x1
+j=1
+Mentre (i <= x2) 
+	j = y1
+        Mentre (j <= y2)
+		GotoXY(i, j)
+		StampareAVideo(" ")
+		j = j + 1
+	Fine
+        i = i + 1
+Fine
+GotoXY(0, 0)
+
+_______________________________________________________________________________
+- ESPORTARE CONTATTI SU FILE
+// COMMENTO: modifiche: aggiunto metodo di iterazione per i nodi
+Input: rubrica, rubrica da cui esportare i contatti, rubrica
+Output: file, file su cui esportare i contatti, file
+Lavoro: j, indice di scorrimento, intero
+	stringa, stringa che indica il nome del file su cui esportare i contatti, stringa
+	nodoc, nodo ausiliario utile allo scorrimento, contatto
+	lung, lunghezza del nome del file, intero
+	fine, valore che indica se uscire dal ciclo, intero
+	fine2, valore che indica se il nome del file è stato scritto correttamente, intero
+Codice:
+fine=0
+fine2=0
+j=1
+lung=0
+cont=1
+PulireSchermo(2, 1, 100, 100)
+GOTOXY(3, 10)
+StampareAVideo("Esportare Contatti su File")
+Mentre (fine = 0)
+	GOTOXY(5, 1)
+	StampareAVideo("Digitare il nome del File su cui esportare i contatti, e scrivere .txt alla fine")
+	GOTOXY(6, 1)
+	StampareAVideo("Nome: ")
+	Gotoxy(6, 8)
+	stringa = LeggereDaTastieraAvanzato(stringa, MAXLUNGNOME)
+	lung = LunghezzaStringa(stringa)
+	Se (lung < 4 OR elemento di nome file in posizione lung-4 != '.' OR elemento di nome file in posizione lung-3 != 't' OR elemento di nome file in posizione lung-2 != 'x' OR elemento di nome file in posizione lung-1 != 't')
+		GOTOXY(8,5)
+		MostrareErrore(13)
+		PulireSchermo(7, 1, 7, 80)
+		fine2 = 1
+	Altrimenti fine = 1
+Fine
+Se (fine2 != 1)
+	file = AprireFile(stringa, w)
+	nodoc = campo contatti di rubrica
+	Mentre (nodoc != NULL)
+		j=1
+		stringa = LeggereNome(nodoc, rubrica)
+		Mentre (j<=MAXLUNGNOME)
+			file = ScrivereCarattereSuFile(file, LeggereCarattereStringa(stringa, j)
+			file = AvanzarePosizione(file)
+			j = j + 1
+		Fine
+		file = CambiarePosizione(file, MAXLUNGNOME)
+		j=1
+		stringa = LeggereCognome(nodoc, rubrica)
+		Mentre (j<=MAXLUNGCOGNOME)
+			file = ScrivereCarattereSuFile(file, LeggereCarattereStringa(stringa, j)
+			file = AvanzarePosizione(file)
+			j = j + 1
+		Fine
+		file = CambiarePosizione(file, MAXLUNGCOGNOME + MAXLUNGNOME)
+		j=1
+		stringa = ConversioneInteroArray(LeggereNumero(nodoc, rubrica))
+		Mentre (j<=MAX_LUNG_ARRAY_TELEFONO)
+			file = ScivereCarattereSuFile(file, LeggereCarattereStringa(stringa, j)
+			file = AvanzarePosizione(file)
+			j = j + 1
+		Fine
+		file = CambiarePosizione(file,  MAXLUNGCOGNOME + MAXLUNGNOME + MAX_LUNG_ARRAY_TELEFONO + 1)
+		file = ScivereCarattereSuFile(file, LeggereStato(nodoc, rubrica))
+		file = AvanzarePosizione(file)
+		file = ScrivereCarattereSuFile(file, '\n')
+		file = AvanzarePosizione(file)
+		nodoc = campo next di nodoc
+	Fine
+	File = ChiudereFile(stringa)
+	StampareAVideo("Contatti esportati correttamente")
+Fine
+_______________________________________________________________________________
+- DIVISIONE CON RESTO
+Input: dividendo, numero da dividere per il divisore, intero
+       divisore, numero per cui dividre il dividendo, intero
+Output: r, resto dell'operazione, intero
+Lavoro: q, quoziente della divisione, intero
+Codice:
+Mentre (dividendo >= divisore)
+	dividendo = dividendo - divisore
+	q = q + 1
+Fine
+r = dividendo
+_______________________________________________________________________________
+- CONVERSIONE INTERO ARRAY
+Input: n, intero da convertire, intero
+Output: array, array corrispondente all'intero, stringa
+Lavoro: i, indice di scorrimento, intero
+	temp, valore ausiliario, intero
+Codice:
+i=1
+temp = n
+Mentre (i<MAX_LUNG_ARRAY_TELEFONO)
+	valore del campo lettere di array in posizione i = ' '
+	i = i + 1
+Fine
+i = MAX_LUNG_ARRAY_TELEFONO
+Mentre (i>= 0)
+	valore del campo lettere di array in posizione i = DivisioneConResto(temp, 10)
+	temp = temp / 10
+	i = i - 1
+Fine
+_______________________________________________________________________________
+- IMPORTARE CONTATTI DA FILE
+// COMMENTO: modifiche: aggiunto metodo di iterazione per i nodi
+Input: rubrica, rubrica in cui importare i contatti, rubrica
+Output: rubrica, rubrica con i contatti importati, rubrica
+Lavoro: i, indice di scorrimento, intero
+	j, indice di scorrimento, intero
+	stringa, stringa che indica il nome del file da cui importare i contatti, stringa
+	file, file da cui importare i contatti, file
+	contatto_t, contatto temporaneo in cui salvare i dati letti da file, contatto
+Codice:
+i=1
+j=1
+PulireSchermo(2, 1, 100, 100)
+GOTOXY(3, 10)
+StampareAVideo("Importare Contatti da File")
+Ripeti
+	Ripeti
+		GOTOXY(5, 1)
+		StampareAVideo("Digitare il nome del File da cui importare i contatti, compreso il .txt")
+		GOTOXY(6, 1)
+		StampareAVideo("Nome: ")
+		Gotoxy(6, 8)
+		stringa = LeggereDaTastieraAvanzato(stringa, MAXLUNGNOME)
+		Se (LunghezzaStringa(stringa)) = < 5)
+			GOTOXY(7,1)
+			MostrareErrore(12)
+			PulireSchermo(4, 1, 6, 100)
+	Finchè (LunghezzaStringa(stringa)) = < 5)
+	file = AprireFile(stringa, r)
+	Se (file = NULL)
+		Allora
+		GOTOXY (8,1)
+		MostrareErrore(10)
+		PulireSchermo(4, 1, 7, 100)
+Finche (file != NULL)
+Mentre (LeggereCarattereDaFile(file) != EoF)
+	i = 1
+	campo next di contatto_t = NULL
+	Mentre (i <= MAXLUNGNOME)
+		campo nome di contatto_t in posizione i = LeggereCarattereDaFile(file)
+		file = AvanzarePosizione(file)
+		i = i + 1
+	Fine
+	i = 1
+	file = CambiarePosizione(file, MAXLUNGNOME)
+	Mentre (i <= MAXLUNGCOGNOME)
+		campo cognome di contatto_t in posizione i = LeggereCarattereDaFile(file)
+		file = AvanzarePosizione(file)
+		i = i + 1
+	Fine
+	i = 1
+	file = CambiarePosizione(file, MAXLUNGNOME + MAXLUNGCOGNOME)
+	Mentre (i <= MAX_LUNG_ARRAY_TELEFONO)
+		campo numero di contatto_t in posizione i = LeggereCarattereDaFile(file)
+		file = AvanzarePosizione(file)
+		i = i + 1
+	Fine
+	i = 1
+	file = CambiarePosizione(file, MAXLUNGNOME + MAXLUNGCOGNOME + MAX_LUNG_ARRAY_TELEFONO + 1)
+	campo stato di contatto_t = LeggereCarattereDaFile(file)
+	rubrica = AggiungereARubrica(contatto_t, rubrica)
+	contatto_t = AzzeraContattoGenerico(contatto_t)
+	file = AvanzarePosizione(file)
+	file = AvanzarePosizione(file)
+Fine
+StampareAVideo("Contatti importati correttamente")
+_______________________________________________________________________________
+- AZZERA CONTATTO GENERICO
+// COMMENTO: modifiche: aggiunte modifiche per supportare i nodi
+Input: contatto, contatto da azzerare, contatto
+Output: contatto, contatto con campi azzerati, contatto
+Lavoro: i, indice di scorrimento, intero
+	null, valore usato per azzerare nome e cognome, array di caratteri
+	nuovo_numero, valore usato per azzerare il numero, intero
+Codice:
+i=1
+nuovo_numero = 0
+i=1
+Mentre (i<MaxLungNome)
+	campo nome in posizione i di contatto = ' '
+	i = i + 1
+Fine
+i=1
+Mentre (i<MaxLungCognome)
+	campo cognome in posizione i di contatto = ' '
+	i = i + 1
+Fine
+campo numero di contatto = 0
+campo stato di contatto = 0
+campo next di contatto = NULL
+_______________________________________________________________________________

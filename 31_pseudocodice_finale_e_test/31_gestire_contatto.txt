@@ -1,0 +1,357 @@
+
+- GESTIRE CONTATTO - GRUPPO 31
+
+Il modulo seguente presenta funzioni che riguardano modifiche ai singoli contatti.
+_______________________________________________________________________________
+
+- CANCELLARE CONTATTO
+Input:  rubrica, rubrica in cui eliminare il contatto, rubrica
+Output: rubrica, rubrica col contatto cancellato, rubrica
+Lavoro: contatto_c, contatto da scegliere e cancellare, contatto
+	nodoc, indice di scorrimento, contatto
+	prev, valore che indica nodo precedente, contatto
+	fine, valore che indica di uscire dal ciclo, intero
+	numero_c, numero del contatto da cancellare, intero
+Codice:
+fine = 0
+PulireSchermo(2, 0, 40, 90)
+GOTOXY(2, 35)
+StampareAVideo("Cancellare Contatto")
+Mentre (fine != 0)
+	GOTOXY(3, 1)
+	StampareAVideo("Scegliere il contatto da cancellare")
+	numero_c = CercareContatto(rubrica1)
+	Se (numero_c = 0)
+            PulireSchermo(3,0,10,70);
+            fine = 1
+	nodoc = campo Contatti di rubrica
+	prev = NULL
+	contatto_c = NULL
+	Mentre (nodoc != NULL) AND fine != 0)
+		Se (LeggiNumero(nodoc, rubrica) = numero_C)
+			contatto_c = nodoc
+			nodoc = campo next di nodoc
+		Altrimenti 
+			prev = nodoc
+			nodoc = campo next di nodoc
+	Fine
+	Se (contatto_c = NULL)
+		GOTOXY(5,1)
+		Allora MostrareErrore(6)
+		PulireSchermo(3, 1, 5, 100)
+	Altrimenti 
+		Se (prev = NULL)
+			campo Contatti di rubrica = campo next di contatto_c
+		Altrimenti
+			campo next di prev = campo next di contatto_c
+		Fine
+		rubrica1 = ScrivereDimensione(LeggereDimensione(rubrica1)-1)
+		StampareAVideo("Contatto cancellato correttamente")
+	Fine
+Fine
+_______________________________________________________________________________
+- MODIFICARE CONTATTO
+Input: rubrica, rubrica in cui modificare il contatto, rubrica
+Output: rubrica, rubrica con il contatto modificato, rubrica
+Lavoro: x, valore che indica se uscire dal ciclo, intero
+	fine1, valore utile a chiudere il ciclo, è pari a 1 se il ciclo va chiuso, intero
+	scelta, scelta tra le varie opzioni, intero
+	contatto_m, contatto da modificare, contatto
+	numero_t, numero del contatto da modificare, intero
+	nome, nuovo nome del contatto da modificate, array di caratteri
+	cognome, nuovo cognome del contatto da modificate, array di caratteri
+	numero_m, nuovo numero del contatto da modificare, interoù
+	temp, indice di scorrimento della rubrica, contatto
+Codice:
+x= -10
+fine1=0
+scelta=0
+contatto_m = NULL
+PulireSchermo(2, 1, 40, 60)
+GOTOXY(2, 35)
+StampareAVideo("Modificare Contatto")
+Mentre (x = -10)
+	GOTOXY(3, 10)
+	StampareAVideo("Scegliere contatto da modificare")
+	GOTOXY(4, 10)
+	numero_t = CercareContatto(rubrica)
+	Se (numero_t = 0)
+		StampareAVideo("Errore")
+		x= 10
+	Se (verificaNumero(numero_t, rubrica) = 0)
+		GOTOXY(5,1)
+		Allora MostrareErrore(6)
+		PulireSchermo(4, 1, 4, 100)
+	Altrimenti x=10
+	Fine
+Fine
+temp = campo contatti di rubrica
+Mentre (temp != NULL)
+	Se (campo numero di temp = numero_t)
+		contatto_m = temp
+	temp = campo next di temp
+Fine
+Se (contatto_m = NULL)
+	GOTOXY(5,10)
+	MostrareErrore(6)
+	PulireSchermo(5,1,5,90)
+Ripeti
+	PulireSchermo(5, 1, 5, 100)
+	GOTOXY(6, 1)
+	StampareAVideo("Scelgiere cosa modificare:")
+	GOTOXY(8, 1)
+	StampareAVideo(" 1) Nome ")
+	GOTOXY(9, 1)
+	StampareAVideo(" 2) Cognome")
+	GOTOXY(10, 1)
+	StampareAVideo(" 3) Num. Telefono ")
+	GOTOXY(11, 1)
+	StampareAvideo(" 4) Chiudi")
+	GOTOXY(13, 1)
+	scelta = LeggereDaTastiera(scelta)
+	GOTOXY(14, 1)
+	Se (scelta = 1) 
+		Ripeti
+			GOTOXY(14,10)
+			StampareAVideo("Inserire Nuovo nome: ")
+			nome = LeggereDaTastieraAvanzato(nome, MAXLUNGNOME)
+			GOTOXY(15, 1)
+			Se (LunghezzaStringa(nome) > MAXLUNGNOME)
+				GOTOXY(15,1)
+				MostrareErrore(1)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti
+				StampareAVideo("Il nuovo nome è ")
+				StampareAVideo(nome)
+				ScrivereNome(nome, contatto_m, rubrica)
+			Fine
+		Finchè (LunghezzaStringa(nome > MAXLUNGNOME)
+	Altrimenti Se (scelta = 2)
+		Ripeti
+			GOTOXY(14,10)
+			StampareAVideo("Inserire Nuovo cognome: ")
+			cognome = LeggereDaTastieraAvanzato(cognome, MAXLUNGNOME)
+			GOTOXY(15, 1)
+			Se (LunghezzaStringa(cognome > MAXLUNGCOGNOME)
+				GOTOXY(15,1)
+				MostrareErrore(1)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti
+				StampareAVideo("Il nuovo cognome è ")
+				StampareAVideo(cognome)
+				ScrivereNome(cognome, contatto_m, rubrica)
+			Fine
+		Finchè (LunghezzaStringa(cognome > MAXLUNGCOGNOME)
+	Altrimenti Se (scelta = 3)
+		Ripeti
+			GOTOXY(14,10)
+			StampareAVideo("Inserire Nuovo numero: ")
+			numero = LeggereDaTastiera(numero)
+			GOTOXY(15, 1)
+			Se (numero > 999999999999)
+				GOTOXY(15,1)
+				MostrareErrore(2)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti Se (numero < 999999999)
+				GOTOXY(15,1)
+				MostrareErrore(11)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti Se (VerificaNumero(numero, r) = 1)
+				GOTOXY(15, 1)
+				MostrareErrore(3)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti
+			StampareAVideo("Il nuovo numero è ")
+			StampareAVideo(numero)
+			ScrivereNumero(numero, contatto_m, rubrica)
+			Fine
+		Finchè (numero > 999999999999 AND numero < 9999999999 AND VerificaNumero(numero) = 1)
+	Altrimenti Se (scelta = 4)
+		fine1 = 1
+	Fine
+	Altrimenti
+		GOTOXY(15, 1)
+		MostrareErrore(7)
+	Fine
+	PulireSchermo(5, 1, 14, 100)
+	PulireSchermo(15, 1, 100, 100)
+Mentre (fine1 = 0)
+PulireSchermo(2,0,10,70)
+PulireSchermo(15,1,15,70)
+_______________________________________________________________________________
+- AGGIUNGERE CONTATTO AI PREFERITI O BLOCCATI:
+Input: rubrica, rubrica in cui si trova il contatto da aggiungere ai preferiti, rubrica
+Output: rubrica, rubrica con contatto scelto aggiunto ai preferiti o bloccati, rubrica
+Lavoro: scelta, indica se aggiungere ai preferiti (2) o bloccati (3), intero
+	contatto_c, contatto da scegliere e aggiungere ai preferiti o bloccati, contatto
+	x, valore che indica se uscire dal ciclo, intero
+	fine, valore utile a chiudere il ciclo, è pari a 1 se il ciclo va chiuso, intero
+	numero_t, numero del contatto da aggiungerea i preferiti o bloccati,, intero
+Codice:
+x=-10
+fine=0
+scelta=0
+contatto_c = NULL
+PulireSchermo(2, 1, 30, 90)
+GOTOXY(2, 15)
+StampareAVideo("Aggiungere contatto ai preferiti o bloccati")
+Mentre (x = -10)
+	GOTOXY(3, 1)
+	StampareAVideo("Scegliere contatto da aggiungere ai preferiti o bloccati")
+	GOTOXY(4, 1)
+	numero_t = CercareContatto(r)
+	Se (verificaNumero(numero_t, r) = 0 OR numero_t = 0)
+		GOTOXY(5,1)
+		Allora MostrareErrore(6)
+		PulireSchermo(4, 1, 4, 100)
+	Fine
+	Altrimenti x=10
+	Fine
+Fine=1
+temp = campo Contatti di rubrica
+Mentre (temp != NULL)
+	Se (campo numero di temp = numero_t)
+		contatto_c = temp
+	temp = campo next di temp
+Fine
+Se (contatto_c = NULL)
+	GOTOXY(5,10)
+	MostrareErrore(6)
+	PulireSchermo(5,1,5,90)
+GOTOXY(7, 10)
+Se (campo stato di contatto_c = 2) 
+	Allora StampareAVideo("Questo contatto è già nei preferiti)
+Fine
+Altrimenti Se (campo stato di contatto_c = 3) 
+	Allora StampareAVideo("Questo contatto è già nei bloccati)
+Fine
+GOTOXY(8, 8)
+StampareAVideo("Scegliere se aggiungere il contatto ai preferiti (2) o ai bloccati (3), premi (0) per uscire")
+Ripeti
+	PulireSchermo(9, 1, 9, 100)
+	GOTOXY(9, 1)
+	StampareAVideo("Inserire Opzione: ")
+	GOTOXY(9, 19)
+	scelta = LeggereDaTastiera(scelta)
+	Se (scelta = 2)
+		Allora contatto_c = ScrivereStato(2, contatto_c, r)
+		       fine = 1
+	Fine
+	Altrimenti Se (scelta = 3)
+		Allora contatto_c = ScrivereStato(3, contatto_c, r)
+		       fine = 1
+	Fine
+	Altrimenti Se (scelta = 0)
+		Allora fine = 1
+	Fine
+	Altrimenti
+		GOTOXY(10, 1)
+		MostrareErrore(7)
+	Fine
+Finché (fine = 0)
+StampareAVideo("Contatto aggiunto correttamente")
+PulireSchermo(2, 1, 100, 100)
+_______________________________________________________________________________
+- RIMUOVERE CONTATTO DAI PREFERITI
+Input: rub, rubrica di cui visualizzare i preferiti, selezionare un contatto e rimuoverlo dai preferiti, rubrica
+Output: rub, rubrica con contatto selezionato non più tra i preferiti, rubrica
+Lavoro:	contatto_c, contatto da rimuovere dai preferiti, contatto
+	numero_t, numero del contatto da rimuovere dai preferiti, intero
+	temp, indice di scorrimento, contatto
+	f, valore che indica se il contatto scelto è gia nei preferiti, intero
+	x, valore che indica se uscire dal ciclo, intero
+Codice:
+x = -10
+f = 0
+contatto_c = NULL
+PulireSchermo(2, 1, 30 90)
+GOTOXY(2, 15)
+StampareAVideo("Rimuovere contatto dai preferiti")
+Mentre (x = -10)
+	GOTOXY(3, 1)
+	StampareAVideo("Scegliere il contatto da rimuovere dai preferiti")
+	GOTOXY(5,1)
+	numero_t = CercareContatto(rub)
+	Se (verificaNumero(numero_t, r) = 0 OR numero_t = 0)
+		GOTOXY(5,1)
+		Allora MostrareErrore(6)
+		PulireSchermo(4, 1, 4, 100)
+	Altrimenti x=10
+	Fine
+Fine
+temp = campo Contatti di rubrica
+Mentre (temp != NULL)
+	Se (campo numero di temp = numero_t)
+		contatto_c = temp
+	temp = campo next di temp
+Fine
+Se (contatto_c = NULL)
+	GOTOXY(5,10)
+	MostrareErrore(6)
+	PulireSchermo(5,1,5,90)
+temp = campo Contatti di rubrica
+Mentre (temp != NULL AND f != 0)
+	Se (LeggereNumero(temp, rubrica) = numero_t
+		Se (LeggereStato(temp, rubrica) = 2)
+			f = 1
+	temp = campo next di temp
+Fine
+Se (f != 0)
+	GOTOXY(6, 1);
+        MostrareErrore(8);
+	PulireSchermo(3,0,7,90)
+contatto_c = ScrivereStato(1, contatto_c, rub)
+PulireSchermo(2, 1, 40, 100)
+_______________________________________________________________________________
+- RIMUOVERE CONTATTO DAI BLOCCATI
+Input: rub, rubrica di cui visualizzare i bloccati, selezionare un contatto e rimuoverlo dai bloccati, rubrica
+Output: rub, rubrica con contatto selezionato non più tra i bloccati, rubrica
+Lavoro: contatto_c, contatto da rimuovere dai bloccati, contatto
+	x, valore ausiliario che indica la posizione del contatto da rimuovere dai bloccati, intero
+Codice:
+x = -10
+f = 0
+contatto_c = NULL
+PulireSchermo(2, 1, 30 90)
+GOTOXY(2, 15)
+StampareAVideo("Rimuovere contatto dai preferiti")
+Mentre (x = -10)
+	GOTOXY(3, 1)
+	StampareAVideo("Scegliere il contatto da rimuovere dai bloccati")
+	GOTOXY(5,1)
+	numero_t = CercareContatto(rub)
+	Se (verificaNumero(numero_t, r) = 0 OR numero_t = 0)
+		GOTOXY(5,1)
+		Allora MostrareErrore(6)
+		PulireSchermo(4, 1, 4, 100)
+	Altrimenti x=10
+	Fine
+Fine
+temp = campo Contatti di rubrica
+Mentre (temp != NULL)
+	Se (campo numero di temp = numero_t)
+		contatto_c = temp
+	temp = campo next di temp
+Fine
+Se (contatto_c = NULL)
+	GOTOXY(5,10)
+	MostrareErrore(6)
+	PulireSchermo(5,1,5,90)
+temp = campo Contatti di rubrica
+Mentre (temp != NULL AND f != 0)
+	Se (LeggereNumero(temp, rubrica) = numero_t
+		Se (LeggereStato(temp, rubrica) = 3)
+			f = 1
+	temp = campo next di temp
+Fine
+Se (f != 0)
+	GOTOXY(6, 1);
+        MostrareErrore(9);
+	PulireSchermo(3,0,7,90)
+contatto_c = ScrivereStato(1, contatto_c, rub)
+PulireSchermo(2, 1, 40, 100)

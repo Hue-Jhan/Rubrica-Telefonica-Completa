@@ -1,0 +1,13 @@
+Lunghezza massima di caratteri superata
+Numero troppo grande
+Numero già esistente in rubrica
+Nome non corrispondente a nessun contatto
+Cognome non corrispondente a nessun contatto tra quelli possibili
+Contatto non trovato
+Inserire solo caratteri tra quelli indicati
+Contatto non tra i preferiti
+Contatto non tra i bloccati
+File non trovato
+Numero troppo piccolo
+Apertura del file non riuscita
+Nome del file non termina con ".txt"
