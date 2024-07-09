@@ -1,0 +1,32 @@
+
+- TIPI DI DATO RUBRICA TELEFONICA - GRUPPO 31
+
+- STRUTTURE DATI: 
+CONTATTO, record con 4 campi
+	nome, nome del contatto, array di caratteri, >3, <MAXLUNGNOME
+	cognome, cognome del contatto, array di caratteri, >3, <MAXLUNGCOGNOME
+	numero, numero del contatto, intero, >999999999, <999999999999      // esistono numeri da 9 cife e da 10 cifre
+	stato, indica se il contatto è normale (1), preferito (2), o bloccato (3), intero, compreso tra 1 e 3
+	next, contatto successivo, contatto
+
+RUBRICA, record con 2 campi
+	contatti, contatti della rubrica, array di Contatto
+	dimensione, dimensione della rubrica, intero, >0
+
+FILE, record con 2 campi
+	posizione, posizione del file in cui è stata eseguita l'ultima operazione, intero
+	lettere, caratteri contenuti nel file, array di caratteri
+
+STRINGA, record con 2 campi
+	lettere, caratteri contenuti nella stringa, array di caratteri
+	dim, dimensione della stringa, intero
+	pos, posizione di un carattere nella stringa, intero
+
+- COSTANTI:
+MAXLUNGNOME, massimo numero di caratteri di cui è composto il mome di un contatto, 20
+MAXLUNGCOGNOME, massimo numero di caratteri di cui è composto il cognome di un contatto, 30
+MAXLUNGSTRINGA, massimo numero di caratteri di cui è composta una stringa, 80
+MAX_LUNG_ARRAY_TELEFONO, massimo numero di caratteri di cui è composto l'array che contiene il numero di telefono (convertito da intero), 12
+
+- LAVORO:
+rubrica_temporanea, rubrica ausiliaria, rubrica

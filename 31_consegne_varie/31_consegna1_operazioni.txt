@@ -1,0 +1,85 @@
+
+- Consegna 1 - Operazioni Rubrica Telefonica – Gruppo 31 
+
+// COMMENTO: MODIFICHE: modificati i dati di input della maggior parte delle funzioni
+// per supportare i nodi.
+
+NOME: Inserire Nuovo Contatto. 
+DESCRIZIONE: Aggiungere un nuovo contatto alla rubrica principale, se non è già stato inserito. 
+OBIETTIVO: creare un nuovo contatto e inserirlo nella rubrica telefonica principale. 
+INFORMAZIONI: Rubrica
+
+
+NOME: Eliminare un contatto. 
+DESCRIZIONE: Rimuovere un contatto dalla rubrica principale, se esiste. 
+OBIETTIVO: Eliminare un contatto dalla rubrica telefonica principale. 
+INFORMAZIONI: Nome, Cognome, o numero del contatto da eliminare, e possibilità di scelta di uno dei contatti fra quelli mostrati. 
+
+ 
+NOME: Modificare un contatto. 
+DESCRIZIONE: Possibilità di modificare un contatto della rubrica principale, se esistente. 
+OBIETTIVO: Modifica delle informazioni di un contatto in rubrica principale. 
+INFORMAZIONI: Nome, Cognome, o numero del contatto, possibilità di scelta di uno dei contatti fra quelli mostrati e le nuove informazioni da sostituire. 
+ 
+
+NOME: Cercare un contatto.
+DESCRIZIONE: Ricercare un contatto all’interno della rubrica principale, se esistente. 
+OBIETTIVO: Ricerca di un contatto nella rubrica telefonica principale. 
+INFORMAZIONI: Nome, Cognome, o numero del contatto, possibilità di scelta di uno dei contatti fra quelli mostrati. 
+
+ 
+NOME: Visualizzare rubrica telefonica. 
+DESCRIZIONE: Visualizzare tutti i contatti della rubrica telefonica principale. 
+OBIETTIVO: Visualizzazione dei contatti della rubrica telefonica principale. 
+INFORMAZIONI: Rubrica telefonica principale. 
+
+ 
+NOME: Importare contatti. 
+DESCRIZIONE: Importare i contatti da file. 
+OBIETTIVO: Importazione contatti nella rubrica telefonica. 
+INFORMAZIONI: Rubrica telefonica, file da cui esportare i contatti 
+
+ 
+NOME: Esportare contatti. 
+DESCRIZIONE: Esportare i contatti da file. 
+OBIETTIVO: Esportazione contatti della rubrica telefonica. 
+INFORMAZIONI: Rubrica telefonica, file in cui esportare i contatti. 
+ 
+
+NOME: Bloccare un contatto. 
+DESCRIZIONE: Inserire un contatto nella lista dei contatti bloccati, se esistente. 
+OBIETTIVO: Spostare un contatto dalla lista principale a quella dei bloccati. 
+INFORMAZIONI: Nome, Cognome o numero del contatto da bloccare e  possibilità di scelta tra uno dei contatti fra quelli mostrati. 
+
+
+NOME: Sbloccare un contatto. 
+DESCRIZIONE: Rimuovere un contatto dalla lista dei contatti bloccati, se esistente. 
+OBIETTIVO: Spostare un contatto dalla lista dei bloccati a quella principale. 
+INFORMAZIONI: Nome, Cognome o numero del contatto da sbloccare e  possibilità di scelta tra uno dei contatti fra quelli mostrati. 
+ 
+
+NOME: Visualizzare contatti bloccati. 
+DESCRIZIONE: Visualizzare i contatti bloccati, se esistenti. 
+OBIETTIVO: Visualizzare i contatti della rubrica “Bloccati”, 
+INFORMAZIONI: Rubrica Bloccati. 
+
+
+NOME: Eliminare un contatto bloccato. 
+DESCRIZIONE: Rimuovere un contatto dalla rubrica Bloccati, se esiste. 
+OBIETTIVO: Eliminare un contatto dalla rubrica telefonica Bloccati. 
+INFORMAZIONI: Nome, Cognome, o numero del contatto da eliminare, e possibilità di scelta di uno dei contatti fra quelli mostrati. 
+ 
+
+NOME: Modificare un contatto Bloccati. 
+DESCRIZIONE: Possibilità di modificare un contatto della rubrica Bloccati, se esistente. 
+OBIETTIVO: Modifica delle informazioni di un contatto in rubrica Bloccati. 
+INFORMAZIONI: Nome, Cognome, o numero del contatto, possibilità di scelta di uno dei contatti fra quelli mostrati e le nuove informazioni da sostituire. 
+ 
+
+NOME: Cercare un contatto tra i bloccati. 
+DESCRIZIONE: Ricercare un contatto all’interno della rubrica Bloccati, se esistente. 
+OBIETTIVO: Ricerca di un contatto nella rubrica telefonica Bloccati. 
+INFORMAZIONI: Nome, Cognome, o numero del contatto, possibilità di scelta di uno dei contatti fra quelli mostrati. 
+
+ 
+ 
