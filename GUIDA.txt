@@ -1,0 +1,14 @@
+
+- GUIDA RUBRICA - GRUPPO 31
+
+Il file zip contiene una cartella con tutte le precedenti consegne aggiornate (31_consegne_varie),
+una cartella con lo pseudocodice completo e i casi di test (31_pseudocodice_finale_e_test), 
+e la build del progetto in C di Eclipse (31_codice_rubrica).
+
+
+
+- GUIDE PHONEBOOK
+
+The zip file contains a folder with all the previous assignments (31_consegne_varie), 
+a folder with the complete pseudocode and test cases (31_pseudocodice_finale_e_test), 
+and the project build made in Eclipse in C (31_codice_rubrica).
