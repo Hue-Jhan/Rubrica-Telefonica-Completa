@@ -1,0 +1,545 @@
+
+
+- CONSEGNA 4 - GESTIRE RUBRICA - GRUPPO 31
+
+_______________________________________________________________________________
+- INSERIRE NUOVO CONTATTO
+Input: rubrica, rubrica in cui inserire il contatto, rubrica
+Output: rubrica, rubrica aggiornata con il nuovo contatto, rubrica
+Lavoro: j, indice ausiliario di scorrimento, intero
+	nuovo_contatto, contatto da aggiungere in rubrica, contatto
+	nome, array temporaneo in cui salvare il nome del contatto, array di caratteri, MAXLUNGNOME
+	cognome, array temporaneo in cui salvare il cognome del contatto, array di caratteri, MAXLUNGCOGNOME
+	numero, valore temporaneo in cui salvare il numero del contatto, intero
+Codice:
+i=1
+j=1
+PulireSchermo(2, 1, 100, 100)
+GOTOXY(4, 15)
+StampareAVideo("Inserimento Nuovo Contatto")
+Ripeti
+	GOTOXY(6, 1)
+	StampareAVideo("Nome: ")
+	GOTOXY(6, 7)
+	nome = LeggereDaTastieraAvanzato(nome, MAXLUNGNOME)
+	Se (LunghezzaStringa(nome) > MAXLUNGNOME)
+		GOTOXY(7,1)
+		MostrareErrore("31_errori.txt", 1)
+		PulireSchermo(6, 1, 6, 100)
+Finchè (LunghezzaStringa(nome) > MAXLUNGNOME)
+Mentre (i<MAXLUNGNOME)
+	elemento in posizione i di campo nome di nuovo_contatto = elemento di nome in posizione i
+	i = i + 1
+Fine
+Ripeti
+	GOTOXY(8, 1)
+	StampareAVideo("Cognome: ")
+	GOTOXY(8, 10)
+	cognome = LeggereDaTastieraAvanzato(cognome, MAXLUNGCOGNOME)
+	Se (LunghezzaStringa(cognome) > MAXLUNGCOGNOME)
+		GOTOXY(9,1)
+		MostrareErrore("31_errori.txt", 1)
+		PulireSchermo(8, 1, 8, 100)
+Finchè (LunghezzaStringa(cognome) > MAXLUNGCOGNOME)
+i=1
+Mentre (i<MAXLUNGCOGNOME)
+	elemento in posizione i di campo cognome di nuovo_contatto = elemento di cognome in posizione i
+	i = i + 1
+Fine
+Ripeti
+	GOTOXY(10, 5)
+	StampareAVideo("Avvertimento per il numero: 10-12 cifre Max, non inserire "+" prima del prefisso")
+	GOTOXY(11, 10)
+	StampareAVideo("Numero di Telefono: ")
+	GOTOXY(10, 22)
+	numero = LeggereDaTastiera(numero)
+	Se (numero > 999999999999)
+		GOTOXY(12,8)
+		MostrareErrore("31_errori.txt", 2)
+		PulireSchermo(10, 1, 11, 100)
+	Se (numero < 999999999)
+		GOTOXY(12,8)
+		MostrareErrore("31_errori.txt", 11)
+		PulireSchermo(10, 1, 11, 100)
+	Se (VerificaNumero(numero, rubrica) = 1)
+		GOTOXY(12, 8)
+		MostrareErrore("31_errori", 3)
+		PulireSchermo(10, 1, 11, 100)
+Finchè (numero > 999999999999 OR numero < 9999999999 OR VerificaNumero(numero, rubrica) = 1)
+campo numero di nuovo contatto = numero
+campo stato di nuovo_contatto = 1
+rubrica = AggiungereARubrica(nuovo_contatto, rubrica)
+PulireSchermo(2, 1, 100 100)
+_______________________________________________________________________________
+- AGGIUNGERE A RUBRICA
+Input: contatto_da_aggiungere, contatto da aggiungere alla rubrica, contatto
+       rubrica, rubrica alla quale aggiungere il conttato, rubrica
+Output: rubrica, rubrica aggiornata col nuovo contatto, rubrica
+Lavoro: temp, contatto ausiliario per iterare nella rubrica, contatto
+Codice:
+temp = campo Contatti di rubrica
+campo next di contatto_da_aggiungere = NULL
+Se temp = NULL
+	campo Contatti di rubrica = contatto_da_aggiungere
+Altrimenti
+	Mentre (campo next di temp != NULL)
+		temp = campo next di temp
+	Fine
+	campo next di temp = contatto_da_aggiungere
+Fine
+_______________________________________________________________________________
+- AGGIUNGERE A RUBRICA TEMPORANEA
+Input: contatto_originale, contatto originale da copiare in rubrica, contatto
+       rubrica_t, rubrica nella quale copiare il conttato, rubrica
+Output: rubrica_t, rubrica aggiornata col nuovo contatto, rubrica
+Lavoro: contatto_t, contatto da copiare nella rubrica, contatto
+Codice:
+contatto_t = CopiaContatto(contatto_originale)
+AggiungereARubrica(contatto_t, rubrica_t)
+_______________________________________________________________________________
+- COPIA CONTATTO
+Input: contatto_originale, contatto originale da copiare in rubrica, contatto
+Output: contatto_t, contatto i cui campi sono stati copiati dal contatto_originale, contatto
+Lavoro: contatto_n, contatto ausiliario, contatto
+	i, indice di scorrimento, intero
+Codice:
+i=1
+Mentre (i<MAXLUNGNOME)
+	elemento di campo nome in posizione i di contatto_n = elemento di campo nome in posizione i di contatto_originale
+	i = i + 1
+Fine
+i=1
+Mentre (i<MAXLUNGCOGNOME)
+	elemento di campo cognome in posizione i di contatto_n = elemento di campo cognome in posizione i di contatto_originale
+	i = i + 1
+Fine
+campo numero di contatto_n = campo numero di contatto_originale
+campo stato di contatto_n = campo stato di contatto_originale
+campo next di contatto_n = NULL
+_______________________________________________________________________________
+- VERIFICA NUMERO
+Input: numero_da_cercare, numero da cercare all'interno della rubrica, intero
+       rubrica, rubrica in cui verificare l'esistenza di numero_da_cercare	
+Output: esito, indica se il numero è già presente nella rubrica (1) o se non lo è (0), booleano
+Lavoro: temp, contatto che funge da indice di scorrimento, contatto
+Codice: 
+i = 1
+esito = 0
+Se (rubrica = NULL OR campo Contatti di rubrica = NULL)
+	esito = 0
+Altrimenti
+	temp = campo Contatti di rubrica
+	Mentre (temp != NULL)
+		Se numero_da_cercare = campo numero di temp
+			Allora esito = 1
+		temp = campo next di temp
+	Fine
+Fine
+_______________________________________________________________________________
+- CERCA NOME
+Input: nome_da_cercare, nome da cercare all'interno della rubrica, array di caratteri
+       rubrica, rubrica nella quale cercare il nome, rubrica
+       rubrica_t, rubrica temporanea in cui salvare i nomi trovati, rubrica
+Output: esito, indica se il nome è già presente nella rubrica (1) o se non lo è (0), booleano
+Lavoro:	temp, contatto che funge da indice di scorrimento, contatto
+Codice: 
+esito = 0
+temp = campo Contatti di rubrica
+Mentre (temp != NULL) 
+	Se VerificaNomeLettera(nome_da_cercare, LeggereNome(temp, rubrica) = 1
+	Allora esito = 1
+		AggiungereARubricaTemporanea(temp, rubrica_temporanea)
+	temp = campo next di temp
+Fine
+_______________________________________________________________________________
+- VERIFICA NOME LETTERA
+Input: nome1, nome da cercare, array di caratteri
+       nome2, nome da verificare in caso sia uguale a quello da cercare, array di caratteri
+Output: esito, indica se i nomi sono uguali (1), o diversi (0)
+Lavoro: i, indice di scorrimento, intero
+	j, indice ausiliario di scorrimento, intero
+Codice: 
+i=1
+j=1
+Esito = 1
+Mentre (i<MAXLUNGNOME AND esito = 1)
+	Se elemento di nome1 in posizione i = elemento di nome2 in posizione i
+	Allora i=i+1
+	Altrimenti esito = 0
+Fine
+_______________________________________________________________________________
+- CERCARE CONTATTO
+Input: rubrica, rubrica in cui cercare il contatto, rubrica
+Output: numero1, numero del contatto scelto, intero
+Lavoro: j, indice di scorrimento, intero
+	err1, indica se il nome non esiste (0), intero
+	err2, indica se il cognome non esiste (0), intero
+	nome1, nome del contatto da selezionare, array di caratteri, MAXLUNGNOME
+	cognome1, cognome del contatto da selezionare, array di caratteri, MAXLUNGCOGNOME
+	fine, valore usato per chiudere il ciclo, intero
+	rubrica_t, rubrica temporanea in cui salvare i contatti dati dal risultato della ricerca, rubrica
+	p, valore ausilario usato per memorizzare l'indice di scorrimento, intero
+	temp3, contatto ausiliario che funge da indice di scorrimento, contatto
+	temp, contatto ausiliario che funge da indice di scorrimento, contatto
+Codice:
+j=1
+x=1
+p=1
+fine=0
+err1=1
+err2=1
+PulireSchermo(3, 1, 100 100)
+GOTOXY(3, 15)
+StampareAVideo("Cercare Contatto")
+Mentre (fine = 0)
+	err1 = 1
+	Mentre (err1 = 1)
+		GOTOXY(5,5)
+		StampareAVideo("Digitare il nome del contatto da cercare (0 per uscire)")
+		GOTOXY(6,5)
+		StampareAVideo("Nome: ")
+		GOTOXY(6,7)
+		nome1 = LeggereDaTastieraAvanzato(nome1, MAXLUNGNOME)
+		Se (elemento in posizione 1 di nome1 = 0)
+		Allora fine = 1
+		Altrimenti Se (CercaNome(nome1, rubrica, rubrica_t) = 0) 
+			Allora
+				err1 = 1
+				GOTOXY(7,3)
+				MostrareErrore("31_errori", 4)
+				PulireSchermo(6, 1, 6, 100)
+		Altrimenti 
+			err1 = 0
+		Fine
+	Fine
+		GOTOXY(8, 5)
+		StampareAVideo("Ecco i risultati della ricerca per nome: ")
+		GOTOXY(9, 1)
+		temp3 = campo Contatti di rubrica
+		Mentre (temp3 != NULL)
+			StampareAVideo(LeggereNome(temp3, rubrica_temporanea))
+			StampareAVideo(" ")
+			StampareAVideo(LeggereCognome(temp3, rubrica_temporanea))
+			StampareAVideo(" ")
+			StampareAVideo(LeggiNumero(temp3, rubrica_temporanea))
+			temp3 = campo next di temp3
+			GOTOXY(10 + j, 1)
+			j=j+1
+		Fine
+	p = j
+	Ripeti
+		j = p
+		GOTOXY(12 + j, 5)
+		StampareAVideo("Scrivere il cognome del contatto che si vuole selezionare (0 per uscire)")
+		GOTOXY(13+j, 5)
+		StampareAVideo("Cognome: ")
+		cognome1 = LeggereDaTastieraAvanzato(cognome1, MAXLUNGCOGNOME)
+		Se (elemento in posizione 1 di nome1 = 0)
+		Allora fine = 1
+		temp = campo Contatti di rubrica
+		Mentre (temp != NULL AND err2 != 0)
+			Se (VerificaNomeLettera(LeggereCognome(temp, rubrica_temporanea), cognome1) = 1)
+				numero1 = campo numero di temp 
+				err2 = 0
+			Altrimenti 
+				err2 = 1
+				temp = campo next di temp
+			Fine
+		Fine
+		Se (err2 = 1)
+			Allora
+				GOTOXY(14+j, 3)
+				MostrareErrore("31_errori", 5)
+				PulireSchermo(12+j, 1, 13+j, 100)
+	Finchè (err2 = 1)
+	campo Contatti di rubrica_t = NULL
+	rubrica_temporanea = ScriviDimensione(0, rubrica_temporanea)
+	fine = 1
+Fine
+PulireSchermo(3,1,40,90)
+_______________________________________________________________________________
+- LEGGERE DA TASTIERA AVANZATO
+Input: dato, dato in cui salvare ciò che viene letto da tastiera, array di caratteri
+       dim, dimensione del dato, intero, >0
+Output: dato, dato modificato con caratteri digitati da tastiera, array di caratteri
+Lavoro: i, indice di scorrimento, intero
+	c, carattere letto da tastiera, carattere
+	fine, valore utile a chiudere il ciclo, è pari a 1 se il ciclo va chiuso, intero
+Codice:
+i=1
+fine=0
+Mentre (i>dim+1 AND fine=0)
+	c = LeggiDaTastiera(c)
+	Se (i = dim)
+		StampareAVideo("\n")
+		MostrareErrore("31_errori", 1)
+		fine = 1
+	Se (c = '.' AND i>1)
+		fine = 1
+	elemento di dato in posizione i = c
+	i = i + 1
+FINE
+_______________________________________________________________________________
+- ORDINARE RUBRICA
+Input: rubrica, rubrica da ordinare, rubrica
+Output: rubrica, ordinata secondo l'ordine scelto, rubrica
+lavoro: i, indice di scorrimento, intero
+	j, indice di scorrimento, intero
+	scelta, scelta su come ordinare la rubrica, intero
+Codice:
+i = 1
+j = 1
+scelta = -2
+PulireSchermo(2, 1, 100, 100)
+GOTOXY(2, 15)
+StampareAVideo("Ordinare Rubrica")
+Mentre (scelta != -1)
+	GOTOXY(4, 1)
+	StampareAVideo("Scegliere come ordinare la rubrica")
+	GOTOXY(6, 1)
+	StampareAVideo(" 1) Ordine crescente")
+	GOTOXY(7, 1)
+	StampareAVideo(" 2) Ordine decrescente")
+	GOTOXY(8, 1)
+	StampareAVideo(" 0) Esci")
+	GOTOXY(10, 1)
+	scelta = LeggereDaTastiera(scelta)
+	Se (scelta = 1)
+		GOTOXY(12, 1)
+		StampareAVideo("Scegliere l'ordine: ")
+		GOTOXY(14, 1)
+		StampareAVideo(" 3) Ordine per Nome ")
+		GOTOXY(15, 1)
+		StampareAVideo(" 4) Ordine per Cognome ")
+		GOTOXY(16, 1)
+		StampareAVideo(" 0) Uscire ")
+		GOTOXY(18, 1)
+		scelta = LeggereDaTastiera(scelta)
+			Se (scelta = 3)
+				rubrica = OrdineCrescente(rubrica, 0)
+			Altrimenti Se (scelta = 4)
+				rubrica = OrdineCrescente(rubrica, 1)
+			Altrimenti Se (scelta = 0)
+				scelta = -1
+	Altrimenti Se (scelta = 2)
+		GOTOXY(12, 1)
+		StampareAVideo("Scegliere l'ordine: ")
+		GOTOXY(14, 1)
+		StampareAVideo(" 3) Ordine per Nome ")
+		GOTOXY(15, 1)
+		StampareAVideo(" 4) Ordine per Cognome ")
+		GOTOXY(16, 1)
+		StampareAVideo(" 0) Uscire ")
+		GOTOXY(18, 1)
+		scelta = LeggereDaTastiera(scelta)
+			Se (scelta = 3)
+				rubrica = OrdineDecrescente(rubrica, 0)
+			Altrimenti Se (scelta = 4)
+				rubrica = OrdineDecrescente(rubrica, 1)
+			Altrimenti Se (scelta = 0)
+				scelta = -1
+	Altrimenti Se (scelta = 0)
+		scelta = -1
+		PulireSchermo(2, 1, 100, 100)
+	Altrimenti
+		GOTOXY(12, 1)
+		MostrareErrore("31_errori", 7)
+		PulireSchermo(10, 1, 11, 100)
+	StampareAVideo("Rubrica ordinata correttamente")
+	PulireSchermo(2, 1, 100, 100)
+Fine
+_________________________________________________________________________________
+- COMPARA STRINGA
+Input: stringa1, stringa da comparare, stringa
+	stringa2, stringa da comparare, stringa
+Output: esito, indica se la prima stringa ha valori piu grandi della seconda (1) o il contrario (0), intero
+Lavoro: i, indice di scorrimento, intero
+	fine, valore che determina l'uscita dal ciclo, intero
+	L, lunghezza usata nel ciclo, intero
+Codice:
+i=1
+fine = 0
+esito=0
+Se lunghezzaStringa(stringa1) >= lunghezzaStringa(stringa2)
+	Allora L = lunghezzaStringa(stringa1)
+Altrimenti L = lunghezzaStringa(stringa2)
+Mentre (i<L AND fine=0)
+	Se elemento in posizione i di stringa1 > elemento in posizione i di stringa2
+		Allora esito = 1
+		fine = 1
+	Altrimenti Se elemento in posizione i di stringa1 = elemento in posizione i di stringa2
+		i = i + 1
+	Altrimenti Se elemento in posizione i di stringa1 < elemento in posizione i di stringa2
+			Allora esito = 0
+			fine = 1
+Fine
+_________________________________________________________________________________
+- ORDINE CRESCENTE
+Input: rubrica, rubrica da ordinare in ordine crescente per nome o cognome, rubrica
+       valore, indica se l'ordine è per nome (0) o per cognome (1), intero
+Output: rubrica, rubrica ordinata in ordine crescente per nome o cognome, rubrica
+Lavoro:	nodo, indice di scorrimento, contatto
+	nodosucc, indice di scorrimento, contatto
+	temp, dato temporaneo in cui salvare i contatti, contatto
+	swap, valore che indica al ciclo di finire, intero
+	i, indice di scorrimento, intero
+Codice:
+i=1
+nodoc = campo Contatti di rubrica
+nodosucc = NULL
+swap = 0;
+Ripeti
+	swap = 0
+	nodoc = campo Contatti di rubrica
+	Mentre (campo next di nodoc != NULL)
+		nodosucc = campo next di nodoc
+	    Se (valore = 0)
+		Se (ComparaStringa(LeggereNome(nodoc), LeggereNome(nodosucc) > 0)
+			Mentre (i<MAXLUNGNOME)
+				elemento in posizione i di campo nome di temp = elemento in posizione i di campo nome di nodoc
+				i = i + 1
+			Fine
+			i = 1
+			Mentre (i<MAXLUNGCOGNOME)
+				elemento in posizione i di campo cognome di temp = elemento in posizione i di campo cognome di nodoc
+				i = i + 1
+			Fine	
+			campo numero di temp = LeggerNumero(nodoc, rubrica)
+			campo stato di temp = LeggereStato(nodoc, rubrica)
+			ScrivereNome(LeggereNome(nodosucc), nodoc, rubrica)
+			ScrivereCognome(LeggereCognome(nodosucc), nodoc, rubrica)
+			ScrivereNumero(LeggereNumero(nodosucc), nodoc, rubrica)
+			ScrivereStato(LeggereStato(nodosucc), nodoc, rubrica)
+			i = 1
+			Mentre (i<MAXLUNGNOME)
+				elemento in posizione i di campo nome di nodosucc = elemento in posizione i di campo nome di temp
+				i = i + 1
+			Fine
+			i = 1
+			Mentre (i<MAXLUNGCOGNOME)
+				elemento in posizione i di campo cognome di nodosucc = elemento in posizione i di campo cognome di temp
+				i = i + 1
+			Fine
+			ScrivereNumero(campo numero di temp, nodosucc, rubrica)
+			ScrivereStato(campo stato di temp, nodosucc, rubrica)
+			swap = 1
+		Fine
+	   Altrimenti Se (valore = 1)
+		Se (ComparaStringa(LeggereCognome(nodoc), LeggereCognome(nodosucc) > 0)
+			Mentre (i<MAXLUNGNOME)
+				elemento in posizione i di campo nome di temp = elemento in posizione i di campo nome di nodoc
+				i = i + 1
+			Fine
+			i = 1
+			Mentre (i<MAXLUNGCOGNOME)
+				elemento in posizione i di campo cognome di temp = elemento in posizione i di campo cognome di nodoc
+				i = i + 1
+			Fine	
+			campo numero di temp = LeggerNumero(nodoc, rubrica)
+			campo stato di temp = LeggereStato(nodoc, rubrica)
+			ScrivereNome(LeggereNome(nodosucc), nodoc, rubrica)
+			ScrivereCognome(LeggereCognome(nodosucc), nodoc, rubrica)
+			ScrivereNumero(LeggereNumero(nodosucc), nodoc, rubrica)
+			ScrivereStato(LeggereStato(nodosucc), nodoc, rubrica)
+			i = 1
+			Mentre (i<MAXLUNGNOME)
+				elemento in posizione i di campo nome di nodosucc = elemento in posizione i di campo nome di temp
+				i = i + 1
+			Fine
+			i = 1
+			Mentre (i<MAXLUNGCOGNOME)
+				elemento in posizione i di campo cognome di nodosucc = elemento in posizione i di campo cognome di temp
+				i = i + 1
+			Fine
+			ScrivereNumero(campo numero di temp, nodosucc, rubrica)
+			ScrivereStato(campo stato di temp, nodosucc, rubrica)
+			swap = 1
+		Fine
+	    nodoc = campo next di nodoc
+	Fine
+Finchè (swap = 0)
+_________________________________________________________________________________
+- ORDINE DECRESCENTE
+Input: rubrica, rubrica da ordinare in ordine decrescente per nome o cognome, rubrica
+       valore, indica se l'ordine è per nome (0) o per cognome (1), intero
+Output: rubrica, rubrica ordinata in ordine decrescente per nome o cognome, rubrica
+Lavoro:	nodo, indice di scorrimento, contatto
+	nodosucc, indice di scorrimento, contatto
+	temp, dato temporaneo in cui salvare i contatti, contatto
+	swap, valore che indica al ciclo di finire, intero
+	i, indice di scorrimento, intero
+Codice:
+i=1
+nodoc = campo Contatti di rubrica
+nodosucc = NULL
+swap = 0;
+Ripeti
+	swap = 0
+	nodoc = campo Contatti di rubrica
+	Mentre (nodoc != NULL AND campo next di nodoc != NULL )
+		nodosucc = campo next di nodoc
+	   Se (valore = 0)
+		Se (ComparaStringa(LeggereNome(nodoc), LeggereNome(nodosucc) = 0)
+			Mentre (i<MAXLUNGNOME)
+				elemento in posizione i di campo nome di temp = elemento in posizione i di campo nome di nodoc
+				i = i + 1
+			Fine
+			i = 1
+			Mentre (i<MAXLUNGCOGNOME)
+				elemento in posizione i di campo cognome di temp = elemento in posizione i di campo cognome di nodoc
+				i = i + 1
+			Fine	
+			campo numero di temp = LeggerNumero(nodoc, rubrica)
+			campo stato di temp = LeggereStato(nodoc, rubrica)
+			ScrivereNome(LeggereNome(nodosucc), nodoc, rubrica)
+			ScrivereCognome(LeggereCognome(nodosucc), nodoc, rubrica)
+			ScrivereNumero(LeggereNumero(nodosucc), nodoc, rubrica)
+			ScrivereStato(LeggereStato(nodosucc), nodoc, rubrica)
+			i = 1
+			Mentre (i<MAXLUNGNOME)
+				elemento in posizione i di campo nome di nodosucc = elemento in posizione i di campo nome di temp
+				i = i + 1
+			Fine
+			i = 1
+			Mentre (i<MAXLUNGCOGNOME)
+				elemento in posizione i di campo cognome di nodosucc = elemento in posizione i di campo cognome di temp
+				i = i + 1
+			Fine
+			ScrivereNumero(campo numero di temp, nodosucc, rubrica)
+			ScrivereStato(campo stato di temp, nodosucc, rubrica)
+			swap = 1
+		Fine
+	   Altrimenti Se (valore = 1)
+		Se (ComparaStringa(LeggereCognome(nodoc), LeggereCognome(nodosucc) = 0)
+			Mentre (i<MAXLUNGNOME)
+				elemento in posizione i di campo nome di temp = elemento in posizione i di campo nome di nodoc
+				i = i + 1
+			Fine
+			i = 1
+			Mentre (i<MAXLUNGCOGNOME)
+				elemento in posizione i di campo cognome di temp = elemento in posizione i di campo cognome di nodoc
+				i = i + 1
+			Fine	
+			campo numero di temp = LeggerNumero(nodoc, rubrica)
+			campo stato di temp = LeggereStato(nodoc, rubrica)
+			ScrivereNome(LeggereNome(nodosucc), nodoc, rubrica)
+			ScrivereCognome(LeggereCognome(nodosucc), nodoc, rubrica)
+			ScrivereNumero(LeggereNumero(nodosucc), nodoc, rubrica)
+			ScrivereStato(LeggereStato(nodosucc), nodoc, rubrica)
+			i = 1
+			Mentre (i<MAXLUNGNOME)
+				elemento in posizione i di campo nome di nodosucc = elemento in posizione i di campo nome di temp
+				i = i + 1
+			Fine
+			i = 1
+			Mentre (i<MAXLUNGCOGNOME)
+				elemento in posizione i di campo cognome di nodosucc = elemento in posizione i di campo cognome di temp
+				i = i + 1
+			Fine
+			ScrivereNumero(campo numero di temp, nodosucc, rubrica)
+			ScrivereStato(campo stato di temp, nodosucc, rubrica)
+			swap = 1
+		Fine
+	   nodoc = campo next di nodoc
+	Fine
+Finchè (swap = 0)

@@ -1,0 +1,182 @@
+
+- CONSEGNA 4 - GESTIRE CONTATTO - GRUPPO 31
+_______________________________________________________________________________
+- CANCELLARE CONTATTO
+Input:  rubrica, rubrica in cui eliminare il contatto, rubrica
+Output: rubrica, rubrica col contatto cancellato, rubrica
+Lavoro: contatto_c, contatto da scegliere e cancellare, contatto
+	nodoc, indice di scorrimento, contatto
+	prev, valore che indica nodo precedente, contatto
+	fine, valore che indica di uscire dal ciclo, intero
+	numero_c, numero del contatto da cancellare, intero
+Codice:
+fine = 0
+PulireSchermo(2, 0, 40, 90)
+GOTOXY(2, 35)
+StampareAVideo("Cancellare Contatto")
+Mentre (fine != 0)
+	GOTOXY(3, 1)
+	StampareAVideo("Scegliere il contatto da cancellare")
+	numero_c = CercareContatto(rubrica1)
+	Se (numero_c = 0)
+            PulireSchermo(3,0,10,70);
+            fine = 1
+	nodoc = campo Contatti di rubrica
+	prev = NULL
+	contatto_c = NULL
+	Mentre (nodoc != NULL) AND fine != 0)
+		Se (LeggiNumero(nodoc, rubrica) = numero_C)
+			contatto_c = nodoc
+			nodoc = campo next di nodoc
+		Altrimenti 
+			prev = nodoc
+			nodoc = campo next di nodoc
+	Fine
+	Se (contatto_c = NULL)
+		GOTOXY(5,1)
+		Allora MostrareErrore("31_errori", 6)
+		PulireSchermo(3, 1, 5, 100)
+	Altrimenti 
+		Se (prev = NULL)
+			campo Contatti di rubrica = campo next di contatto_c
+		Altrimenti
+			campo next di prev = campo next di contatto_c
+		Fine
+		rubrica1 = ScrivereDimensione(LeggereDimensione(rubrica1)-1)
+		StampareAVideo("Contatto cancellato correttamente")
+	Fine
+Fine
+_______________________________________________________________________________
+- MODIFICARE CONTATTO
+Input: rubrica, rubrica in cui modificare il contatto, rubrica
+Output: rubrica, rubrica con il contatto modificato, rubrica
+Lavoro: x, valore che indica se uscire dal ciclo, intero
+	fine1, valore utile a chiudere il ciclo, è pari a 1 se il ciclo va chiuso, intero
+	scelta, scelta tra le varie opzioni, intero
+	contatto_m, contatto da modificare, contatto
+	numero_t, numero del contatto da modificare, intero
+	nome, nuovo nome del contatto da modificate, array di caratteri
+	cognome, nuovo cognome del contatto da modificate, array di caratteri
+	numero_m, nuovo numero del contatto da modificare, interoù
+	temp, indice di scorrimento della rubrica, contatto
+Codice:
+x= -10
+fine1=0
+scelta=0
+contatto_m = NULL
+PulireSchermo(2, 1, 40, 60)
+GOTOXY(2, 35)
+StampareAVideo("Modificare Contatto")
+Mentre (x = -10)
+	GOTOXY(3, 10)
+	StampareAVideo("Scegliere contatto da modificare")
+	GOTOXY(4, 10)
+	numero_t = CercareContatto(rubrica)
+	Se (numero_t = 0)
+		StampareAVideo("Errore")
+		x= 10
+	Se (verificaNumero(numero_t, rubrica) = 0)
+		GOTOXY(5,1)
+		Allora MostrareErrore("31_errori", 6)
+		PulireSchermo(4, 1, 4, 100)
+	Altrimenti x=10
+	Fine
+Fine
+temp = campo contatti di rubrica
+Mentre (temp != NULL)
+	Se (campo numero di temp = numero_t)
+		contatto_m = temp
+	temp = campo next di temp
+Fine
+Se (contatto_m = NULL)
+	GOTOXY(5,10)
+	MostrareErrore("31_errori.txt", 6)
+	PulireSchermo(5,1,5,90)
+Ripeti
+	PulireSchermo(5, 1, 5, 100)
+	GOTOXY(6, 1)
+	StampareAVideo("Scelgiere cosa modificare:")
+	GOTOXY(8, 1)
+	StampareAVideo(" 1) Nome ")
+	GOTOXY(9, 1)
+	StampareAVideo(" 2) Cognome")
+	GOTOXY(10, 1)
+	StampareAVideo(" 3) Num. Telefono ")
+	GOTOXY(11, 1)
+	StampareAvideo(" 4) Chiudi")
+	GOTOXY(13, 1)
+	scelta = LeggereDaTastiera(scelta)
+	GOTOXY(14, 1)
+	Se (scelta = 1) 
+		Ripeti
+			GOTOXY(14,10)
+			StampareAVideo("Inserire Nuovo nome: ")
+			nome = LeggereDaTastieraAvanzato(nome, MAXLUNGNOME)
+			GOTOXY(15, 1)
+			Se (LunghezzaStringa(nome) > MAXLUNGNOME)
+				GOTOXY(15,1)
+				MostrareErrore("31_errori.txt", 1)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti
+				StampareAVideo("Il nuovo nome è ")
+				StampareAVideo(nome)
+				ScrivereNome(nome, contatto_m, rubrica)
+			Fine
+		Finchè (LunghezzaStringa(nome > MAXLUNGNOME)
+	Altrimenti Se (scelta = 2)
+		Ripeti
+			GOTOXY(14,10)
+			StampareAVideo("Inserire Nuovo cognome: ")
+			cognome = LeggereDaTastieraAvanzato(cognome, MAXLUNGNOME)
+			GOTOXY(15, 1)
+			Se (LunghezzaStringa(cognome > MAXLUNGCOGNOME)
+				GOTOXY(15,1)
+				MostrareErrore("31_errori.txt", 1)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti
+				StampareAVideo("Il nuovo cognome è ")
+				StampareAVideo(cognome)
+				ScrivereNome(cognome, contatto_m, rubrica)
+			Fine
+		Finchè (LunghezzaStringa(cognome > MAXLUNGCOGNOME)
+	Altrimenti Se (scelta = 3)
+		Ripeti
+			GOTOXY(14,10)
+			StampareAVideo("Inserire Nuovo numero: ")
+			numero = LeggereDaTastiera(numero)
+			GOTOXY(15, 1)
+			Se (numero > 999999999999)
+				GOTOXY(15,1)
+				MostrareErrore("31_errori.txt", 2)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti Se (numero < 999999999)
+				GOTOXY(15,1)
+				MostrareErrore("31_errori.txt", 11)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti Se (VerificaNumero(numero, r) = 1)
+				GOTOXY(15, 1)
+				MostrareErrore("31_errori", 3)
+				PulireSchermo(15, 1, 15, 100)
+			Fine
+			Altrimenti
+			StampareAVideo("Il nuovo numero è ")
+			StampareAVideo(numero)
+			ScrivereNumero(numero, contatto_m, rubrica)
+			Fine
+		Finchè (numero > 999999999999 AND numero < 9999999999 AND VerificaNumero(numero) = 1)
+	Altrimenti Se (scelta = 4)
+		fine1 = 1
+	Fine
+	Altrimenti
+		GOTOXY(15, 1)
+		MostrareErrore("31_errori", 7)
+	Fine
+	PulireSchermo(5, 1, 14, 100)
+	PulireSchermo(15, 1, 100, 100)
+Mentre (fine1 = 0)
+PulireSchermo(2,0,10,70)
+PulireSchermo(15,1,15,70)
