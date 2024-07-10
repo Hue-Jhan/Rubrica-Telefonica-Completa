@@ -25,7 +25,7 @@ Ecco l'elenco delle operazioni:
 - Esportare rubrica su file;
 - Importare rubrica da file;
 
-La sottofunzione **`Cercare Contatto`** è molto particolare: per cercare un contatto prima bisogna digitarne il nome, subito dopo tutti i contatti in rubrica con lo stesso nome verranno copiati, aggiunti a una rubrica temporanea e mostrati all'utente; in seguito l'utente digita il cognome del contatto che vuole cercare e viene selezionato il primo contatto con quel cognome nella rubrica temporanea (in teoria dovrebbe essere il primo e anche l'unico); infine la rubrica temporanea viene svuotata (memoria non deallocata).
+La sottofunzione **`Cercare Contatto`** è abbastanza particolare: per cercare un contatto prima bisogna digitarne il nome, subito dopo tutti i contatti in rubrica con lo stesso nome verranno copiati, aggiunti a una rubrica temporanea e mostrati all'utente; in seguito l'utente digita il cognome del contatto che vuole cercare e viene selezionato il primo contatto con quel cognome nella rubrica temporanea (in teoria dovrebbe essere il primo e anche l'unico); infine la rubrica temporanea viene svuotata (memoria non deallocata).
 
 La funzione **`Mostrare Errore`**` invece consiste semplicemente in mostrare un errore specifico ogni volta che è necessario: il file "31_errori.txt" contiene una serie di errori elencati uno dopo l'altro, un errore per rigo; Dato un valore in input, la funzione non fa altro che leggere la riga corrispondente a quel valore e printa il rigo intero.  
 
